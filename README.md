@@ -68,7 +68,7 @@ Klonen Sie Ihr Repository und erstellen Sie eine isolierte virtuelle Python-Umge
 
 ```bash
 git clone https://github.com/Jhymyp/dht11Sensor/
-
+cd dht11Sensor/
 python3 -m venv --system-site-packages .venv
 source .venv/bin/activate
 ```
