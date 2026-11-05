@@ -16,8 +16,7 @@ Ein automatisierte System zur Umweltüberwachung für den Raspberry Pi 3. Das Pr
 2. **DHT11 Temperatur- und Luftfeuchtigkeitssensor**
 3. **16x2 LCD-Display mit PCF8574 I2C-Backpack**
 4. **Rote LED** & **220Ω - 470Ω Widerstand** (Vorwiderstand zur Strombegrenzung)
-5. **4,7kΩ - 10kΩ Widerstand** (Pull-up-Widerstand für die DHT11-Datenleitung, falls ein einzelner 4-Pin-Sensor verwendet wird)
-6. **Steckbrett (Breadboard) und Jumper-Kabel**
+5. **Steckbrett (Breadboard) und Jumper-Kabel**
 
 ## Schaltplan & Pin-Belegung
 
@@ -35,7 +34,6 @@ Ein automatisierte System zur Umweltüberwachung für den Raspberry Pi 3. Das Pr
 |  | SDA | Serielles Datensignal | BCM 2 (SDA) | Pin 3 | 
 |  | SCL | Serielles Taktsignal | BCM 3 (SCL) | Pin 5 | 
 
-*Hinweis: Wenn Sie einen Standalone-DHT11-Sensor mit 4 Pins verwenden, schalten Sie einen 4,7kΩ–10kΩ Pull-up-Widerstand zwischen die DATA-Leitung und die 3,3V VCC-Stromversorgung.*
 
 ## Systemanforderungen & Software-Einrichtung
 
@@ -63,14 +61,6 @@ sudo raspi-config nonint do_i2c 0
 ```bash
 i2cdetect -y 1
 ```
-
-Fügen Sie Ihren Benutzer zu den entsprechenden Hardware-Zugriffsgruppen hinzu:
-
-```bash
-sudo usermod -aG gpio,i2c $USER
-```
-
-*(Bitte melden Sie sich ab und wieder an, damit die Gruppenberechtigungen wirksam werden).*
 
 ### Schritt 3: Einrichten einer virtuellen Python-Umgebung
 
@@ -125,6 +115,5 @@ pip3 install adafruit-blinka adafruit-circuitpython-dht
 | Problem / Fehler | Ursache | Lösung | 
 | ----- | ----- | ----- | 
 | `Timed out waiting for PulseIn message` | `libgpiod2`-Treiber fehlt oder ein Prozesskonflikt liegt vor. | Treiber neu installieren über `sudo apt install --reinstall libgpiod2`. | 
-| `PermissionError: [Errno 13] Permission denied` | Benutzer ist nicht in den benötigten Hardware-Gruppen. | Führen Sie `sudo usermod -aG i2c,gpio $USER` aus und melden Sie sich neu an. | 
 | Display-Hintergrundbeleuchtung ist AN, aber kein Text sichtbar | Kontrast-Potenziometer ist falsch eingestellt oder falsche I2C-Adresse. | Rufen Sie `i2cdetect -y 1` auf, um die Adresse zu prüfen, und stellen Sie das blaue Potenziometer auf der Rückseite des LCDs ein. | 
 | `ImportError: No module named 'adafruit_dht'` | Das Skript wird außerhalb der virtuellen Umgebung ausgeführt. | Aktivieren Sie die Umgebung vor dem Start mit `source .venv/bin/activate`. | 
