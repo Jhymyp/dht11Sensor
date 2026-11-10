@@ -18,7 +18,7 @@ while True:
         if humidity is not None:
             temperature_f = temperature_c * (9 / 5) + 32
 
-            if humidity > 50:
+            if temperature < 20:
                 rote_led.value = True
             else:
                 rote_led.value = False
